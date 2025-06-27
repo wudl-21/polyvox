@@ -6,19 +6,31 @@
 // 命令行参数解析
 CommandLineArgs parse_command_line(int argc, char** argv) {
     CommandLineArgs args;
+
+    // 1. 预解析语言参数
+    std::string lang = "zh";
+    for (int i = 1; i < argc; ++i) {
+        if ((std::string(argv[i]) == "-l" || std::string(argv[i]) == "--lang") && i + 1 < argc) {
+            lang = argv[i + 1];
+            break;
+        }
+    }
+    Message::load(lang); // 先加载语言
+
     cxxopts::Options options("polyvox", "OBJ/MTL/PNG to VOX/Teardown工具");
     options.add_options()
-        ("i,input", "OBJ输入文件", cxxopts::value<std::string>())
-        ("t,texture", "纹理文件/目录", cxxopts::value<std::string>()->default_value(""))
-        ("o,output", "VOX输出文件", cxxopts::value<std::string>()->default_value(""))
-        ("s,size", "单位体素尺寸（米）", cxxopts::value<float>()->default_value("0.1"))
-        ("l,lang", "语言(zh/en)", cxxopts::value<std::string>()->default_value("zh"))
-        ("h,help", "显示帮助");
+        ("i,input", Message::get("CMD_ARG_INPUT_DESC"), cxxopts::value<std::string>())
+        ("t,texture", Message::get("CMD_ARG_TEXTURE_DESC"), cxxopts::value<std::string>()->default_value(""))
+        ("o,output", Message::get("CMD_ARG_OUTPUT_DESC"), cxxopts::value<std::string>()->default_value(".\\output\\output.vox"))
+        ("s,size", Message::get("CMD_ARG_SIZE_DESC"), cxxopts::value<float>()->default_value("0.1"))
+        ("l,lang", Message::get("CMD_ARG_LANG_DESC"), cxxopts::value<std::string>()->default_value("zh"))
+        ("v,verbose", Message::get("CMD_ARG_VERBOSE_DESC"), cxxopts::value<bool>()->default_value("false"))
+        ("h,help", Message::get("CMD_ARG_HELP_DESC"));
 
     auto result = options.parse(argc, argv);
 
-    if (result.count("help") || argc < 2) {
-        Logger::info(Message::get("CMD_HELP", {{"help", options.help()}}));
+    if (result.contains("help") || argc < 2) {
+        std::cout << Message::get("CMD_HELP", { {"help", options.help()} }) << std::endl;
         exit(0);
     }
 
@@ -31,5 +43,6 @@ CommandLineArgs parse_command_line(int argc, char** argv) {
     args.output_file = result["output"].as<std::string>();
     args.voxel_size = result["size"].as<float>();
     args.lang = result["lang"].as<std::string>();
+    args.verbose = result["verbose"].as<bool>();
     return args;
 }

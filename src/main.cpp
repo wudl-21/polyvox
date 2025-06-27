@@ -1541,6 +1541,8 @@ int main(int argc, char** argv) {
     // 1. 解析命令行参数
     CommandLineArgs args = parse_command_line(argc, argv);
 
+    Logger::verbose = args.verbose; // 新增：根据参数设置日志模式
+
     // 1.1 初始化多语言环境
     Message::load(args.lang);
 
@@ -1650,6 +1652,20 @@ int main(int argc, char** argv) {
             FileUtils::getDirectory(args.input_file),
             FileUtils::getStem(args.input_file) + ".vox"
         );
+    }
+
+    // 新增：自动创建输出目录
+    {
+        std::filesystem::path out_path(output_path);
+        auto out_dir = out_path.parent_path();
+        if (!out_dir.empty() && !std::filesystem::exists(out_dir)) {
+            std::error_code ec;
+            std::filesystem::create_directories(out_dir, ec);
+            if (ec) {
+                Logger::error_id("CANNOT_CREATE_OUTPUT_DIR", { {"dirname", out_dir.string()} });
+                return 1;
+            }
+        }
     }
 
     auto final_palette = palette_manager.get_palette();

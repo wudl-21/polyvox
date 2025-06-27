@@ -1,4 +1,11 @@
 {
+    "CMD_ARG_INPUT_DESC": "OBJ文件路径",
+    "CMD_ARG_TEXTURE_DESC": "纹理图片所在目录（默认在OBJ文件所在目录下自动搜索同名目录）",
+    "CMD_ARG_OUTPUT_DESC": "输出路径",
+    "CMD_ARG_SIZE_DESC": "单位体素尺寸（米）",
+    "CMD_ARG_LANG_DESC": "语言(zh/en)",
+    "CMD_ARG_VERBOSE_DESC": "显示详细日志",
+    "CMD_ARG_HELP_DESC": "显示帮助",
     "LOAD_OBJ_SUCCESS": "成功解析OBJ文件, 包含 {vertex_count} 个顶点, {texcoord_count} 个纹理坐标, {face_count} 个三角形面",
     "CANNOT_OPEN_OBJ": "无法打开OBJ文件: {filename}",
     "CANNOT_OPEN_MTL": "无法打开MTL文件: {filename}",
@@ -33,6 +40,7 @@
     "SAVE_VOX_FAIL": "保存VOX文件失败",
     "NO_VALID_SUBMODEL": "创建VOX模型失败：未能生成任何有效子模型",
     "NO_PHYS_TAG": "[采样] 警告: 面材质未找到物理标签: {material}",
-    "CMD_HELP": "{help}",
-    "CMD_MUST_INPUT": "必须指定输入文件 -i"
+    "CMD_HELP": "{help}\n示例：polyvox -i input.obj -o out.vox -t input/ -s 0.1 -v",
+    "CMD_MUST_INPUT": "必须指定输入文件 -i",
+    "CANNOT_CREATE_OUTPUT_DIR": "无法创建输出目录: {dirname}"
 }

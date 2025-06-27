@@ -6,15 +6,18 @@
 
 class Logger {
 public:
-    // 支持直接输出字符串
+    static bool verbose;
+
     static void info(const std::string& msg) {
-        std::cout << "\033[1;32m[INFO] \033[0m" << msg << std::endl; // 绿色
+        if (verbose)
+            std::cout << "\033[1;32m[INFO] \033[0m" << msg << std::endl;
     }
     static void warn(const std::string& msg) {
-        std::cerr << "\033[1;33m[WARN] \033[0m" << msg << std::endl; // 黄色
+        if (verbose)
+            std::cerr << "\033[1;33m[WARN] \033[0m" << msg << std::endl;
     }
     static void error(const std::string& msg) {
-        std::cerr << "\033[1;31m[ERROR] \033[0m" << msg << std::endl; // 红色
+        std::cerr << "\033[1;31m[ERROR] \033[0m" << msg << std::endl;
     }
 
     // 新增：支持消息ID和参数
@@ -28,3 +31,5 @@ public:
         error(Message::get(id, params));
     }
 };
+
+inline bool Logger::verbose = false;

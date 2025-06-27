@@ -1,4 +1,11 @@
 {
+    "CMD_ARG_INPUT_DESC": "Path to OBJ file",
+    "CMD_ARG_TEXTURE_DESC": "Directory containing texture images (by default, searches for a directory with the same name as the OBJ file)",
+    "CMD_ARG_OUTPUT_DESC": "Output path",
+    "CMD_ARG_SIZE_DESC": "Unit voxel size (meters)",
+    "CMD_ARG_LANG_DESC": "Language (zh/en)",
+    "CMD_ARG_VERBOSE_DESC": "Show detailed logs",
+    "CMD_ARG_HELP_DESC": "Show help",
     "LOAD_OBJ_SUCCESS": "Successfully parsed OBJ file, contains {vertex_count} vertices, {texcoord_count} texcoords, {face_count} triangles",
     "CANNOT_OPEN_OBJ": "Cannot open OBJ file: {filename}",
     "CANNOT_OPEN_MTL": "Cannot open MTL file: {filename}",
@@ -33,6 +40,7 @@
     "SAVE_VOX_FAIL": "Failed to save VOX file",
     "NO_VALID_SUBMODEL": "Failed to create VOX model: no valid submodel generated",
     "NO_PHYS_TAG": "[Sample] Warning: No physical tag found for material: {material}",
-    "CMD_HELP": "{help}",
-    "CMD_MUST_INPUT": "Input file must be specified with -i"
+    "CMD_HELP": "{help}\nExample: polyvox -i input.obj -o out.vox -t input/ -s 0.1 -v",
+    "CMD_MUST_INPUT": "Input file must be specified with -i",
+    "CANNOT_CREATE_OUTPUT_DIR": "Cannot create output directory: {dirname}"
 }
