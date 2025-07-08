@@ -2599,6 +2599,14 @@ class MainWindow(QMainWindow):
     @Slot(str)
     def _on_obj_path_changed(self, path):
         """当OBJ路径被设置时，执行预检查并更新UI"""
+        # --- 修复：路径为空时不进行预解析，直接隐藏依赖状态标签 ---
+        if not path:
+            self.dependencies_ok = False
+            self.dependency_status_label.hide()
+            self._update_start_button_state()
+            self._update_material_controls_state()
+            return
+
         message, is_ok = pre_check_dependencies(path)
         
         # --- 修改：存储依赖检查结果 ---
